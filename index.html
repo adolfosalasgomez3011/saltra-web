@@ -128,6 +128,34 @@
   .join .ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px}
   .join .note{font-size:13px;color:#8F959B;margin-top:28px}
 
+
+  /* Lotes */
+  .lots{background:var(--paper)}
+  .lot-bar{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-top:36px}
+  .pills{display:inline-flex;background:#EDE9E2;border-radius:999px;padding:4px;gap:2px;flex-wrap:wrap}
+  .pills button{border:0;background:transparent;font:500 13px "Barlow",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
+  .pills button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(30,33,36,.10)}
+  .lot-count{font-size:14px;color:var(--muted)}
+  .lot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:26px}
+  .lot{position:relative;background:#fff;border:1px solid var(--line);padding:16px 16px 14px;text-align:left;cursor:pointer;font-family:inherit;color:var(--ink);transition:border-color .2s,box-shadow .2s,transform .2s}
+  .lot:hover{border-color:var(--terra);transform:translateY(-1px)}
+  .lot.sel{border-color:var(--terra);box-shadow:inset 0 0 0 1px var(--terra);background:#FCF6F1}
+  .lot .id{padding-right:22px;font-size:11.5px;letter-spacing:.16em;color:var(--terra);font-weight:600}
+  .lot .m2{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:600;line-height:1.1;margin-top:6px}
+  .lot .m2 small{font-family:"Barlow",sans-serif;font-size:13px;font-weight:400;color:var(--muted)}
+  .lot .fr{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .lot .chk{position:absolute;top:12px;right:12px;width:18px;height:18px;border:1px solid #CFC8BD;border-radius:50%;transition:background .2s,border-color .2s}
+  .lot.sel .chk{background:var(--terra);border-color:var(--terra);box-shadow:inset 0 0 0 3px #fff}
+  .lot-note{font-size:13px;color:var(--muted);margin-top:22px}
+  .quote{position:fixed;left:50%;bottom:22px;transform:translate(-50%,140%);z-index:35;display:flex;align-items:center;gap:18px;background:var(--ink);color:#fff;padding:12px 12px 12px 22px;box-shadow:0 14px 40px rgba(0,0,0,.28);transition:transform .35s cubic-bezier(.2,.7,.2,1);max-width:calc(100% - 110px)}
+  .quote.show{transform:translate(-50%,0)}
+  .quote span{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .quote b{color:#E7B48F}
+  .quote a{background:var(--terra);color:#fff;padding:11px 18px;font-weight:600;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+  .quote a:hover{background:#fff;color:var(--ink)}
+  .quote button{background:transparent;border:0;color:#9AA0A6;font-size:20px;cursor:pointer;padding:0 6px}
+  @media (max-width:560px){ .lot-grid{grid-template-columns:repeat(2,1fr)} .quote{left:16px;right:86px;transform:translateY(140%);max-width:none} .quote.show{transform:translateY(0)} .quote span{display:none} }
+
   footer{background:#15171A;color:#8F959B;font-size:14px;padding:46px 0}
   footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
   footer .by{display:flex;align-items:center;gap:14px}
@@ -162,6 +190,7 @@
       <li><a href="#ideas">Ideas</a></li>
       <li><a href="#urbanizacion">Urbanización</a></li>
       <li><a href="#ubicacion">Ubicación</a></li>
+      <li><a href="#lotes">Lotes</a></li>
       <li><a href="#avance">Avance</a></li>
     </ul>
     <a class="cta" href="#interesados">Lista de interesados</a>
@@ -276,6 +305,26 @@
   </div>
 </section>
 
+<section class="lots" id="lotes">
+  <div class="wrap">
+    <div class="eyebrow">Lotes</div>
+    <h2 class="serif">Elige tu lote</h2>
+    <p class="lead" style="margin-top:16px">73 lotes en 6 manzanas, desde 134 m². Selecciona uno o varios y te enviamos la cotización por WhatsApp.</p>
+    <div class="lot-bar">
+      <div class="pills" id="mz"></div>
+      <div class="lot-count" id="cnt"></div>
+    </div>
+    <div class="lot-grid" id="grid"></div>
+    <p class="lot-note">Áreas según el plano de lotización presentado a la municipalidad. La lotización está en trámite y puede ajustarse con su aprobación.</p>
+  </div>
+</section>
+
+<div class="quote" id="quote" role="status">
+  <span id="qtxt"></span>
+  <a id="qbtn" href="#" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+  <button id="qclr" aria-label="Limpiar selección">×</button>
+</div>
+
 <section class="join" id="interesados">
   <div class="wrap">
     <div class="eyebrow" style="color:#E7B48F">Lista de interesados</div>
@@ -310,6 +359,33 @@
   const links=[...document.querySelectorAll('.nav ul a')];
   const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id)); } }),{rootMargin:'-45% 0px -50% 0px'});
   links.forEach(l=>{const t=document.querySelector(l.getAttribute('href')); if(t) io.observe(t);});
+
+  // Lotes: Manzaneo Salas & Salas.pdf (memoria de habilitación urbana). [manzana, lote, área m², frente ml]
+  const LOTES=[["A", 1, 160.01, 10.4], ["A", 2, 160.67, 10.5], ["A", 3, 160.67, 10.5], ["A", 4, 160.67, 10.5], ["A", 5, 160.66, 10.5], ["A", 6, 160.66, 10.5], ["A", 7, 160.66, 10.5], ["A", 8, 160.65, 10.5], ["A", 9, 160.65, 10.5], ["A", 10, 178.75, 9.72], ["A", 11, 160.32, 8.93], ["A", 12, 160.08, 9.13], ["A", 13, 160.1, 9.35], ["A", 14, 160.04, 9.58], ["A", 15, 160.15, 9.85], ["A", 16, 160.08, 10.12], ["A", 17, 160.07, 10.43], ["A", 18, 160.09, 10.76], ["A", 19, 160.14, 11.13], ["A", 20, 160.01, 11.53], ["A", 21, 160.03, 11.99], ["A", 22, 160.05, 12.51], ["B", 1, 160.01, 10.4], ["B", 2, 160.03, 10.4], ["B", 3, 160.04, 10.4], ["B", 4, 160.01, 10.39], ["B", 5, 153.17, 10.29], ["B", 6, 155.75, 10.29], ["B", 7, 158.33, 10.29], ["B", 8, 160.27, 10.39], ["B", 9, 160.41, 10.4], ["B", 10, 160.51, 10.4], ["B", 11, 160.59, 10.4], ["C", 1, 160.28, 10.37], ["C", 2, 160.04, 10.36], ["C", 3, 160.04, 10.36], ["C", 4, 160.04, 10.36], ["C", 5, 160.04, 10.36], ["C", 6, 160.04, 10.36], ["C", 7, 161.72, 10.31], ["C", 8, 165.52, 10.31], ["C", 9, 169.31, 10.31], ["C", 10, 160.04, 10.36], ["C", 11, 160.04, 10.36], ["C", 12, 160.04, 10.36], ["C", 13, 160.04, 10.36], ["C", 14, 160.03, 10.36], ["C", 15, 160.16, 10.37], ["D", 1, 160.02, 14.55], ["D", 2, 160.02, 14.55], ["D", 3, 160.02, 14.55], ["D", 4, 228.36, 22.02], ["D", 5, 160.02, 14.55], ["D", 6, 160.02, 14.55], ["D", 7, 160.02, 14.55], ["E", 1, 160.0, 10.55], ["E", 2, 160.04, 10.47], ["E", 3, 160.0, 10.45], ["E", 4, 160.0, 10.44], ["E", 5, 160.0, 10.42], ["E", 6, 160.0, 10.41], ["E", 7, 160.0, 10.39], ["F", 1, 160.1, 11.27], ["F", 2, 160.0, 10.64], ["F", 3, 160.0, 10.11], ["F", 4, 160.0, 9.65], ["F", 5, 160.0, 9.25], ["F", 6, 180.4, 9.6], ["F", 7, 1019.95, 49.88], ["F", 8, 187.87, 9.0], ["F", 9, 160.0, 8.34], ["F", 10, 160.0, 8.33], ["F", 11, 134.62, 7.74]];
+  const fmt=n=>n.toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const sel=new Set(); let mzOn='Todas';
+  const mzs=['Todas',...[...new Set(LOTES.map(l=>l[0]))]];
+  const mzEl=document.getElementById('mz'), grid=document.getElementById('grid');
+  mzEl.innerHTML=mzs.map(m=>`<button data-m="${m}" class="${m==='Todas'?'on':''}">${m==='Todas'?'Todas':'Mz '+m}</button>`).join('');
+  mzEl.onclick=e=>{const b=e.target.closest('button'); if(!b) return; mzOn=b.dataset.m; [...mzEl.children].forEach(x=>x.classList.toggle('on',x===b)); draw();};
+  function draw(){
+    const list=LOTES.filter(l=>mzOn==='Todas'||l[0]===mzOn);
+    document.getElementById('cnt').textContent=`${list.length} lotes`;
+    grid.innerHTML=list.map(([m,n,a,f])=>{const id=`${m}-${n}`;return `<button class="lot${sel.has(id)?' sel':''}" data-id="${id}"><span class="chk"></span><div class="id">MZ ${m} · LOTE ${n}</div><div class="m2">${fmt(a)} <small>m²</small></div><div class="fr">Frente ${fmt(f)} m</div></button>`}).join('');
+  }
+  grid.onclick=e=>{const b=e.target.closest('.lot'); if(!b) return; const id=b.dataset.id; sel.has(id)?sel.delete(id):sel.add(id); b.classList.toggle('sel'); bar();};
+  function bar(){
+    const q=document.getElementById('quote'), ids=[...sel];
+    q.classList.toggle('show',ids.length>0); if(!ids.length) return;
+    const rows=ids.map(id=>{const [m,n]=id.split('-'); const l=LOTES.find(x=>x[0]===m&&String(x[1])===n); return {id,a:l[2]};});
+    const tot=rows.reduce((s,r)=>s+r.a,0);
+    document.getElementById('qtxt').innerHTML=`<b>${ids.length} ${ids.length>1?'lotes':'lote'}</b> · ${fmt(tot)} m² · ${ids.slice(0,4).join(', ')}${ids.length>4?'…':''}`;
+    const msg=`Hola, quisiera la cotización de ${ids.length>1?'estos lotes':'este lote'} en Mirador de Catarindo:
+`+rows.map(r=>`• Manzana ${r.id.split('-')[0]}, lote ${r.id.split('-')[1]} (${fmt(r.a)} m²)`).join('\n');
+    document.getElementById('qbtn').href='https://wa.me/51954643491?text='+encodeURIComponent(msg);
+  }
+  document.getElementById('qclr').onclick=()=>{sel.clear(); draw(); bar();};
+  draw();
 </script>
 </body>
 </html>
