@@ -35,17 +35,30 @@
   .btn-ghost{border:1px solid rgba(255,255,255,.7);color:#fff}
   .btn-ghost:hover{background:#fff;color:var(--ink)}
 
-  /* Barra */
-  header{position:fixed;top:0;left:0;right:0;z-index:30;transition:background .25s,box-shadow .25s}
-  header.solid{background:rgba(251,250,247,.95);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:78px}
-  .nav .brand img{height:58px}
+  /* Barra · paleta Saltra: carbón #1E2124, cobre #B8734A, crema #F4F1EC */
+  header{position:fixed;top:0;left:0;right:0;z-index:30;transition:background .35s,box-shadow .35s,height .35s;
+    background:linear-gradient(180deg,rgba(20,22,24,.62) 0%,rgba(20,22,24,0) 100%)}
+  header.solid{background:rgba(244,241,236,.94);backdrop-filter:blur(14px) saturate(140%);box-shadow:0 1px 0 rgba(30,33,36,.08)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:88px;transition:height .35s}
+  header.solid .nav{height:72px}
+  .nav .brand{display:flex;align-items:center;gap:22px}
+  .nav .brand img{height:58px;transition:height .35s}
+  header.solid .nav .brand img{height:46px}
   .nav .brand .b{display:none}
   header.solid .nav .brand .w{display:none}
   header.solid .nav .brand .b{display:block}
-  .nav ul{display:flex;gap:30px;list-style:none;font-size:15px;color:#fff}
-  header.solid .nav ul{color:var(--ink-2)}
-  .nav .cta{padding:10px 18px;font-size:14px}
+  .nav ul{display:flex;gap:38px;list-style:none}
+  .nav ul a{position:relative;display:block;padding:8px 0;font-size:12.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#F4F1EC;transition:color .25s}
+  .nav ul a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:#B8734A;transform:scaleX(0);transform-origin:center;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+  .nav ul a:hover::after,.nav ul a.on::after{transform:scaleX(1)}
+  .nav ul a:hover,.nav ul a.on{color:#E7B48F}
+  header.solid .nav ul a{color:#1E2124}
+  header.solid .nav ul a:hover,header.solid .nav ul a.on{color:#B8734A}
+  .nav .cta{padding:12px 22px;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border-radius:0;
+    background:transparent;color:#F4F1EC;border:1px solid #B8734A;transition:background .25s,color .25s,border-color .25s}
+  .nav .cta:hover{background:#B8734A;color:#fff}
+  header.solid .nav .cta{background:#1E2124;color:#F4F1EC;border-color:#1E2124}
+  header.solid .nav .cta:hover{background:#B8734A;border-color:#B8734A}
 
   /* Portada con el recorrido 3D */
   .hero{position:relative;height:100vh;min-height:620px;max-height:940px;color:#fff;overflow:hidden;display:flex;align-items:flex-end}
@@ -151,7 +164,7 @@
       <li><a href="#ubicacion">Ubicación</a></li>
       <li><a href="#avance">Avance</a></li>
     </ul>
-    <a class="btn btn-solid cta" href="#interesados">Lista de interesados</a>
+    <a class="cta" href="#interesados">Lista de interesados</a>
   </div>
 </header>
 
@@ -294,6 +307,9 @@
   const h=document.getElementById('top');
   const onScroll=()=>h.classList.toggle('solid',window.scrollY>window.innerHeight*0.6);
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  const links=[...document.querySelectorAll('.nav ul a')];
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id)); } }),{rootMargin:'-45% 0px -50% 0px'});
+  links.forEach(l=>{const t=document.querySelector(l.getAttribute('href')); if(t) io.observe(t);});
 </script>
 </body>
 </html>
