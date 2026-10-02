@@ -50,7 +50,9 @@
   /* Portada con el recorrido 3D */
   .hero{position:relative;height:100vh;min-height:620px;max-height:940px;color:#fff;overflow:hidden;display:flex;align-items:flex-end}
   .hero video,.hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,22,24,.45) 0%,rgba(20,22,24,.15) 40%,rgba(20,22,24,.78) 100%)}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,22,24,.45) 0%,rgba(20,22,24,.10) 35%,rgba(20,22,24,.85) 100%),linear-gradient(90deg,rgba(20,22,24,.55) 0%,rgba(20,22,24,0) 60%)}
+  .hero h1,.hero p,.hero .eyebrow{text-shadow:0 2px 18px rgba(0,0,0,.45)}
+  .hero .eyebrow{font-size:clamp(14px,1.4vw,17px);font-weight:600;letter-spacing:.28em}
   .hero .wrap{position:relative;z-index:2;padding-bottom:90px;width:100%}
   .hero h1{font-size:clamp(46px,7vw,92px);line-height:1.02;margin:18px 0 18px}
   .hero p{font-size:clamp(17px,1.6vw,21px);font-weight:300;max-width:620px;color:#EDEBE7}
@@ -87,6 +89,7 @@
   .works{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:50px}
   .work{background:#fff;padding:34px 30px}
   .work .n{font-size:13px;color:var(--terra);letter-spacing:.2em;font-weight:500}
+  .work img{width:92px;height:92px;object-fit:contain;margin:-6px 0 6px -6px}
   .work h3{font-size:19px;font-weight:500;margin-top:12px}
   .work p{font-size:15px;color:var(--ink-2);font-weight:300;margin-top:6px}
 
@@ -130,7 +133,7 @@
     section{padding:80px 0}
     .split{gap:40px}
   }
-  @media (max-width:560px){ .steps{grid-template-columns:1fr} .hero .wrap{padding-bottom:70px} }
+  @media (max-width:560px){ .steps{grid-template-columns:1fr} .hero .wrap{padding-bottom:70px} .hero .tag{left:24px;right:auto} }
 </style>
 </head>
 <body>
@@ -206,7 +209,7 @@
     <div class="grid3">
       <div class="tile"><img src="/assets/mirador/casa-costera.jpg" alt="Idea de vivienda costera" loading="lazy"><div><h3>Viviendas costeras</h3><p>Casas de líneas simples, terrazas y patios pensados para el clima templado de la costa.</p></div></div>
       <div class="tile"><img src="/assets/mirador/multifamiliar.jpg" alt="Idea de edificio multifamiliar" loading="lazy"><div><h3>Edificios con vista</h3><p>Lotes para multifamiliares de varios pisos que aprovechan la vista hacia el mar.</p></div></div>
-      <div class="tile"><img src="/assets/mirador/parque.jpg" alt="Idea de parque central" loading="lazy"><div><h3>Parque central</h3><p>Un corazón verde para el barrio, y nuevas formas de vivienda modular en estudio.</p></div></div>
+      <div class="tile"><img src="/assets/mirador/areas-verdes.jpg" alt="Idea de áreas verdes del barrio" loading="lazy"><div><h3>Áreas verdes</h3><p>Una gran proporción del barrio dedicada a jardines, paseos y espacios de recreación.</p></div></div>
     </div>
   </div>
 </section>
@@ -217,12 +220,12 @@
     <h2 class="serif">Lo que incluirá la habilitación</h2>
     <p class="lead" style="margin-top:16px">Las obras previstas para el proyecto, según su programación de habilitación urbana.</p>
     <div class="works">
-      <div class="work"><div class="n">01</div><h3>Agua y desagüe</h3><p>Redes con conexiones domiciliarias para cada lote.</p></div>
-      <div class="work"><div class="n">02</div><h3>Electricidad subterránea</h3><p>Red de baja tensión y alumbrado público subterráneos.</p></div>
-      <div class="work"><div class="n">03</div><h3>Comunicaciones</h3><p>Ductos para los servicios de telecomunicaciones.</p></div>
-      <div class="work"><div class="n">04</div><h3>Pistas y veredas</h3><p>Pistas de adoquín y veredas de concreto.</p></div>
-      <div class="work"><div class="n">05</div><h3>Parques y riego</h3><p>Ornamentación de áreas verdes con sistema de riego.</p></div>
-      <div class="work"><div class="n">06</div><h3>Ingreso controlado</h3><p>Un único acceso al barrio, con pórtico y caseta.</p></div>
+      <div class="work"><img src="/assets/mirador/icon-agua.png" alt="" loading="lazy"><div class="n">01</div><h3>Agua y desagüe</h3><p>Redes con conexiones domiciliarias para cada lote.</p></div>
+      <div class="work"><img src="/assets/mirador/icon-electricidad.png" alt="" loading="lazy"><div class="n">02</div><h3>Electricidad subterránea</h3><p>Red de baja tensión y alumbrado público subterráneos.</p></div>
+      <div class="work"><img src="/assets/mirador/icon-comunicaciones.png" alt="" loading="lazy"><div class="n">03</div><h3>Comunicaciones</h3><p>Ductos para los servicios de telecomunicaciones.</p></div>
+      <div class="work"><img src="/assets/mirador/icon-pistas.png" alt="" loading="lazy"><div class="n">04</div><h3>Pistas y veredas</h3><p>Pistas de adoquín y veredas de concreto.</p></div>
+      <div class="work"><img src="/assets/mirador/icon-areas-verdes.png" alt="" loading="lazy"><div class="n">05</div><h3>Áreas verdes y riego</h3><p>Amplias áreas verdes ornamentadas, con sistema de riego.</p></div>
+      <div class="work"><img src="/assets/mirador/icon-ingreso.png" alt="" loading="lazy"><div class="n">06</div><h3>Ingreso controlado</h3><p>Un único acceso al barrio, con pórtico y caseta.</p></div>
     </div>
   </div>
 </section>
@@ -252,7 +255,7 @@
     <div class="eyebrow">Avance</div>
     <h2 class="serif">Dónde estamos</h2>
     <div class="steps">
-      <div class="step done"><small>Hecho</small><h3>Terreno y zonificación</h3><p>Predio inscrito a nombre de Salas &amp; Salas S.A.C. y zonificación residencial otorgada por la municipalidad.</p></div>
+      <div class="step done"><small>Hecho</small><h3>Terreno y zonificación</h3><p>Predio debidamente inscrito y zonificación residencial otorgada por la municipalidad.</p></div>
       <div class="step done"><small>En obra</small><h3>Cerco e ingreso</h3><p>Muro perimetral y pórtico de ingreso en su etapa final.</p></div>
       <div class="step"><small>En trámite</small><h3>Habilitación urbana</h3><p>Expediente técnico y factibilidades de agua y luz.</p></div>
       <div class="step"><small>Siguiente</small><h3>Obras del barrio</h3><p>Redes, pistas, veredas y áreas verdes.</p></div>
